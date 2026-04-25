@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0a0a0b;
+  --char: #141416;
+  --surface: #1c1c1f;
+  --line: #2a2a2e;
+  --muted: #7a7a82;
+  --paper: #f5f1ea;
+  --flame: #ff5a1f;
+  --ember: #ff7a3a;
+  --spark: #ffae5e;
+
+  --island-radius: 28px;
+
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #050507;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, system-ui, sans-serif;
+  overscroll-behavior: none;
+}
+
+/* Soft animated grain overlay used throughout */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.9'/></svg>");
+  background-size: 160px 160px;
+  border-radius: inherit;
+}
+
+/* Scrollbar polish */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Glass surfaces */
+.glass {
+  background: linear-gradient(180deg, rgba(28,28,31,0.72), rgba(20,20,22,0.62));
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.glass-light {
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* iOS-like home indicator */
+.home-indicator {
+  width: 134px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.85);
+}
+
+/* Hide focus rings unless keyboard */
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--flame); outline-offset: 3px; }
+
+/* Tap highlight off */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Marquee for "Now Playing" style */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 14s linear infinite;
+  will-change: transform;
+}
+
+/* Subtle pulsing ring */
+@keyframes pulseRing {
+  0%   { box-shadow: 0 0 0 0 rgba(255,90,31,0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(255,90,31,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,90,31,0); }
+}
+.pulse-ring { animation: pulseRing 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .pulse-ring { animation: none; }
+}
